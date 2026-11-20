@@ -14,7 +14,7 @@ sys.path.insert(0, HERE)
 from areas_data import AREAS, REGIONS, WORKSHOP  # noqa: E402
 
 SITE = os.path.join(HERE, "..", "site")
-DOMAIN = "https://sharplinewoodworks.co.za"   # TODO: real domain
+DOMAIN = "https://sharplinerenovation.co.za"   # TODO: real domain
 BRAND = "Sharpline Renovation & Woodworks"
 PHONE = "+27 67 617 7735"
 TEL = "+27676177735"
