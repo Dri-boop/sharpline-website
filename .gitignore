@@ -1,0 +1,12 @@
+# Original photos, videos and WhatsApp exports (large, private; the site uses optimised copies in site/img)
+raw/
+
+# Internal planning documents (strategy, competitor review, questions for Charles) — kept local, not published
+docs/
+
+# Local tooling
+.claude/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
