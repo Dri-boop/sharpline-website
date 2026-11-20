@@ -255,7 +255,7 @@ def area_page(a, i, caps, nearby):
       <span class="firm-stamp" aria-hidden="true">Fixed<br>price</span>
       <div>
         <h3>Our price is our price.</h3>
-        <p>Once you accept your quote in {E(name)}, the price is fixed. No surprise extras.</p>
+        <p>Fixed once you say yes. No extras.</p>
       </div>
     </div>
   </div>
