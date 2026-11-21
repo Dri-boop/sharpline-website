@@ -232,7 +232,7 @@ AREAS += [
 ]
 
 REAL_PHOTOS = {
-  "rondebosch": ["reno-01", "reno-02"],
+  "rondebosch": ["reno-01", "reno-02", "reno-05", "reno-06", "reno-07", "reno-08"],
   "green-point": ["kitchen-36", "kitchen-37"],
   "brooklyn": ["kitchen-09"],
   "athlone": ["kitchen-17"],
@@ -277,6 +277,7 @@ AREAS += [
        faq=("Do you work in the Eastern Cape?", "Yes. We've completed a roof project at Southridge in the Eastern Cape. Send us the project details and we'll tell you how we can help.")),
 ]
 REAL_PHOTOS["durban"] = ["furniture-17", "furniture-16"]
+REAL_PHOTOS["eastern-cape"] = ["roof-01", "roof-02"]
 for _a in AREAS:
     if _a["slug"] in REAL_PHOTOS:
         _a["real_photos"] = REAL_PHOTOS[_a["slug"]]

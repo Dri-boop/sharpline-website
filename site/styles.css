@@ -660,3 +660,13 @@ section { border-bottom: var(--line); }
 .job-media--wide video { position: absolute; inset: 0; object-fit: cover; }
 .job-media--wide::before { display: none; }
 @media (max-width: 860px) { .job-media { min-height: 0; aspect-ratio: 4 / 3; } }
+
+/* ---------- "Every job starts on paper" drawings ---------- */
+.drawings { display: grid; grid-template-columns: .9fr 1fr 1fr; gap: 16px; margin-top: clamp(32px, 5vw, 56px); align-items: start; }
+.drawings-copy h3 { margin: 0 0 10px; font: 700 clamp(1.3rem, 2.4vw, 1.8rem)/1.1 var(--f-display); letter-spacing: -.02em; }
+.drawings-copy p { margin: 0; }
+.drawings figure { margin: 0; border: var(--line); background: var(--sawdust); }
+.drawings img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; border-bottom: var(--line); }
+.drawings figcaption { padding: 8px 10px; }
+@media (max-width: 860px) { .drawings { grid-template-columns: 1fr 1fr; } .drawings-copy { grid-column: 1 / -1; } }
+@media (max-width: 520px) { .drawings { grid-template-columns: 1fr; } }
