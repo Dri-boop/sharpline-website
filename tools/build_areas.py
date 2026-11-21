@@ -145,6 +145,7 @@ def business_ld(area_name=None):
     d = {
         "@type": "HomeAndConstructionBusiness", "@id": f"{DOMAIN}/#business", "name": BRAND,
         "url": f"{DOMAIN}/", "telephone": TEL, "image": f"{DOMAIN}/img/kitchen-01.jpg",
+        "sameAs": ["https://maps.app.goo.gl/niwRVW97kVKSbcyAA"],
         "address": {"@type": "PostalAddress", "streetAddress": "Unit 4, 7th Avenue Business Park",
                     "addressLocality": "Maitland, Cape Town", "postalCode": "7405", "addressRegion": "Western Cape", "addressCountry": "ZA"},
     }
@@ -220,7 +221,7 @@ def area_page(a, i, caps, nearby):
     <nav class="crumbs mono" aria-label="Breadcrumb"><a href="{root}">Home</a> / <a href="../">Areas</a> / <span>{E(name)}</span></nav>
     <span class="hero-kicker mono">Carpenter · Joiner · Renovations — {E(name)}, Cape Town</span>
     <h1>Renovation &amp; woodworks in <span class="hl">{E(name)}</span></h1>
-    <p class="area-lede">{E(a["intro"])} Kitchens, built-in cupboards, doors and renovations, quoted at a fixed price.</p>
+    <p class="area-lede">{E(a["intro"])} Kitchens, cupboards, doors and renovations at a fixed price.</p>
     <div class="hero-actions">
       <a class="btn btn--wa" href="#" data-wa-area>Get a quote in {E(name)}</a>
       <a class="btn btn--ghost" href="tel:{TEL}">Call {PHONE}</a>

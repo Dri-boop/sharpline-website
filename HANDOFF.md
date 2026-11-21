@@ -108,3 +108,24 @@ Last updated: 2026-11-21.
 - Confirm postcode, payment split, guarantee, languages.
 - Google Business Profile: verification pending (video likely).
 - More suburb confirmations from Charles → add `real_photos` and rebuild.
+
+## 8. Website status (2026-11-21, end of the first build session)
+
+- Confirmed by the owner: payment split 50/40/10, 12-month workmanship
+  guarantee, site-work hours Mon–Fri 07:30–17:00 / Sat 08:00–13:00,
+  postcode 7405. Do not mention languages.
+- Google Business Profile: https://maps.app.goo.gl/niwRVW97kVKSbcyAA (contact
+  line, workshop "Get directions", JSON-LD `sameAs`/`hasMap` on all pages).
+- "References from past clients available on request" is on the site
+  (Who we are, contact section).
+- Copy was tightened site-wide on request; keep new copy short.
+- No Facebook page yet (later).
+- Waiting on files from the owner (to be saved in `raw/new3/`):
+  1. Charles selfie with glove + timber frame → founder card photo.
+  2. Team photos (two men in a roof, Charles with glove, measuring) →
+     team carousel in "Who we are" (same style as the jobs viewer).
+  3. Floor framing over insulation, office partition wall, white/pine tables
+     and benches, Durban 2021 pool project tray.
+  4. Charles's Google Drive videos (`VID_2025…`) from the email.
+- Photos pasted into chat while Claude is mid-turn are NOT saved to disk;
+  ask the owner to save files into `raw/` instead.
