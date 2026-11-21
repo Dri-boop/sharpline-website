@@ -77,15 +77,20 @@ Last updated: 2026-11-21.
   (ignored by the website's git; report data never goes into the public repo,
   whose files, Actions logs and artifacts anyone can read).
   - `seo/scripts/pull_reports.py`: Search Console + GA4 Data API, last 28 days vs
-    previous 28; writes `reports/<date>/report.md` + `data.json`, `reports/LATEST`.
+    previous 28, plus last 7 days vs previous 7 and plain-English recommendations;
+    writes `reports/<date>/report.md`, `summary.md`, `data.json`, `reports/LATEST`.
     Test offline: `python seo/scripts/pull_reports.py --sample --out seo/sample`.
-  - `seo/.github/workflows/seo-pull-reports.yml`: 1st + 15th, 04:00 UTC; commits
-    the report to the private repo. Needs secret `GOOGLE_SERVICE_ACCOUNT_JSON` and
+  - `seo/.github/workflows/seo-pull-reports.yml`: every Monday 04:00 UTC; commits
+    the report and opens issue "Weekly reach report - <date>" (GitHub emails it). Needs secret `GOOGLE_SERVICE_ACCOUNT_JSON` and
     variable `GA4_PROPERTY_ID` (property number, not the G- ID) there.
 - `.claude/skills/seo-update/SKILL.md` (website repo): instructions for the
   Claude routine **"Sharpline fortnightly SEO review"**
   (`trig_019Xo8eBPhYvBhbUwXzCg2Vf`, 2nd + 16th, 06:00 UTC). It opens one PR on a
-  `claude/seo-<date>` branch, never pushes to main. **Paused** until the owner
+  `claude/seo-<date>` branch, never pushes to main.
+- `.claude/skills/seo-weekly/SKILL.md`: routine **"Sharpline weekly reach review"**
+  (`trig_01ND7eRyteMeL6BRGMZojAck`, Monday 07:00 UTC) comments up to 5
+  recommendations on the weekly issue; changes nothing.
+- Both routines are **paused** until the owner
   adds the Claude GitHub App to `sharpline-seo-reports`; then add that repo as a
   routine source and enable it.
 - Analytics: `site/analytics.js` (GA4, Consent Mode, cookie notice; `GA_ID` = `G-QT5TJW291V`, live since

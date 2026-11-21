@@ -18,7 +18,7 @@ Make a small number of careful, evidence-based SEO improvements to the website, 
 
 ### Step 1 — Check the report
 
-- If `meta.sample` is `true`, or the report date is more than 6 days old, STOP: change nothing, open no pull request, and say why in your final message.
+- If `meta.sample` is `true`, or the report date is more than 8 days old, STOP: change nothing, open no pull request, and say why in your final message.
 - If the report says "Low data" (fewer than 100 impressions in 28 days), only make changes backed by at least 20 impressions for a page or search. If nothing qualifies, STOP with no pull request and explain.
 
 ### Step 2 — Decide changes (only from the report's numbers)
