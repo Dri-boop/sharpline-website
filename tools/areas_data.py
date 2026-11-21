@@ -246,3 +246,37 @@ REAL_PHOTOS = {
 for _a in AREAS:
     if _a["slug"] in REAL_PHOTOS:
         _a["real_photos"] = REAL_PHOTOS[_a["slug"]]
+
+# ---------- more areas from Charles's job labels (Nov 2026) ----------
+REGIONS.append("Beyond Cape Town")
+AREAS += [
+  dict(slug="kuils-river", name="Kuils River", region=3, lat=-33.9300, lon=18.6800, profile=["family", "compact"],
+       intro="We've fitted a kitchen on a site in Kuils River, about 25 minutes from our Maitland workshop.",
+       homes="Kuils River has family homes and newer developments, where kitchens, built-in cupboards and garage doors are common upgrades.",
+       jobs=["Kitchen cupboards and full kitchens", "Built-in wardrobes", "Garage doors"],
+       faq=("Have you worked in Kuils River?", "Yes. We've built and installed a kitchen on a site in Kuils River, and we're happy to quote for homes anywhere in the area.")),
+  dict(slug="epping", name="Epping", region=0, lat=-33.9300, lon=18.5300, profile=["apartment", "family"],
+       intro="Epping is about 10 minutes from our Maitland workshop, and we've done joinery work for businesses there.",
+       homes="Epping is mostly industrial and commercial, so the work here is counters, offices, storage and shop fittings built to take daily use.",
+       jobs=["Counters and reception desks", "Office and workshop fit-outs", "Storage and shelving"],
+       faq=("Do you do commercial joinery in Epping?", "Yes. We've built counters and fittings for a business in Epping, made in our nearby Maitland workshop.")),
+  dict(slug="plattekloof", name="Plattekloof", region=3, lat=-33.8740, lon=18.5780, profile=["family", "pool"],
+       intro="We've completed a project in Plattekloof, about 20 minutes from our Maitland workshop.",
+       homes="Plattekloof has larger family homes on the hillside with views over the city, many with pools and entertainment areas.",
+       jobs=["Family kitchens", "Built-in cupboards and dressing rooms", "Decks and pool decks"],
+       faq=("Do you work in Plattekloof?", "Yes. We've worked on a home there and cover Plattekloof and the surrounding Northern Suburbs.")),
+  dict(slug="durban", name="Durban", region=4, far=True, lat=-29.8587, lon=31.0218, profile=["family"],
+       intro="We've built furniture for clients in Durban, including pine bookcases and custom pieces, and we take on larger projects outside the Western Cape.",
+       homes="Projects outside Cape Town are planned carefully: we confirm measurements, materials and timelines upfront, then build and install.",
+       jobs=["Custom furniture and bookcases", "Built-in cupboards", "Larger fit-out projects"],
+       faq=("Do you really work in Durban?", "Yes. We've built bookcases and furniture for clients in Durban. For projects outside the Western Cape, send us the details and we'll tell you how we can help.")),
+  dict(slug="eastern-cape", name="Eastern Cape", region=4, far=True, lat=-32.9700, lon=27.8700, profile=["family"],
+       intro="We've completed a roof project at Southridge in the Eastern Cape, and we take on larger projects outside the Western Cape.",
+       homes="Projects outside Cape Town are planned carefully: we confirm the scope, materials and timeline upfront before travelling.",
+       jobs=["Roof and structural carpentry", "Renovations", "Larger fit-out projects"],
+       faq=("Do you work in the Eastern Cape?", "Yes. We've completed a roof project at Southridge in the Eastern Cape. Send us the project details and we'll tell you how we can help.")),
+]
+REAL_PHOTOS["durban"] = ["furniture-17", "furniture-16"]
+for _a in AREAS:
+    if _a["slug"] in REAL_PHOTOS:
+        _a["real_photos"] = REAL_PHOTOS[_a["slug"]]

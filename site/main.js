@@ -130,8 +130,49 @@ document.querySelectorAll(".reveal").forEach((el, i) => {
   io.observe(el);
 });
 
-/* only play videos while they are on screen */
-const vidObserver = new IntersectionObserver((entries) => {
-  entries.forEach((en) => { en.isIntersecting ? en.target.play().catch(() => {}) : en.target.pause(); });
-}, { threshold: 0.3 });
-document.querySelectorAll("video").forEach((v) => vidObserver.observe(v));
+/* "In motion jobs": swipeable viewer. Only the job in view plays; the next one peeks in. */
+const jobsTrack = document.querySelector(".jobs-track");
+if (jobsTrack) {
+  const jobs = [...jobsTrack.querySelectorAll(".job")];
+  const count = document.querySelector(".jobs-count");
+  const dots = [...document.querySelectorAll("[data-jobs-dot]")];
+  let current = 0, sectionVisible = false;
+  const setActive = (i) => {
+    current = i;
+    jobs.forEach((j, k) => {
+      j.classList.toggle("is-active", k === i);
+      const v = j.querySelector("video");
+      if (k === i && sectionVisible) { v.preload = "auto"; v.play().catch(() => {}); } else v.pause();
+    });
+    dots.forEach((d, k) => d.setAttribute("aria-selected", k === i));
+    if (count) count.textContent = `${i + 1} / ${jobs.length}`;
+  };
+  const goTo = (i) => {
+    i = Math.max(0, Math.min(jobs.length - 1, i));
+    jobsTrack.scrollTo({ left: jobs[i].offsetLeft - jobs[0].offsetLeft, behavior: "smooth" });
+  };
+  const slideObserver = new IntersectionObserver((entries) => {
+    entries.forEach((en) => { if (en.isIntersecting) setActive(jobs.indexOf(en.target)); });
+  }, { root: jobsTrack, threshold: 0.6 });
+  jobs.forEach((j) => slideObserver.observe(j));
+  document.querySelector("[data-jobs-prev]").addEventListener("click", () => goTo(current - 1));
+  document.querySelector("[data-jobs-next]").addEventListener("click", () => goTo(current + 1));
+  dots.forEach((d, k) => d.addEventListener("click", () => goTo(k)));
+  jobs.forEach((j, k) => j.addEventListener("click", () => { if (k !== current) goTo(k); }));
+  jobsTrack.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") { e.preventDefault(); goTo(current + 1); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); goTo(current - 1); }
+  });
+  new IntersectionObserver(([en]) => { sectionVisible = en.isIntersecting; setActive(current); }, { threshold: 0.25 })
+    .observe(jobsTrack);
+}
+
+/* "Recent work areas": show half the list, expand on click */
+document.querySelectorAll("[data-areas-toggle]").forEach((btn) => {
+  const box = btn.closest(".areas");
+  btn.addEventListener("click", () => {
+    const open = box.classList.toggle("areas--open");
+    btn.setAttribute("aria-expanded", open);
+    btn.textContent = open ? "Show fewer areas ↑" : `Show all ${btn.dataset.count} areas ↓`;
+  });
+});

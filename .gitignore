@@ -5,7 +5,8 @@ raw/
 docs/
 
 # Local tooling
-.claude/
+.claude/*
+!.claude/skills/
 __pycache__/
 *.pyc
 .DS_Store
@@ -14,4 +15,5 @@ Thumbs.db
 # Photos prepared for the Google Business Profile (copies of site images)
 google-business-photos/
 brand/*.tmp
-seo-reports/
+# SEO stream: scripts and reports live in their own private repo inside seo/
+seo/

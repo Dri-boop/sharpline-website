@@ -157,13 +157,15 @@ def area_page(a, i, caps, nearby):
     root = "../../"
     name, slug = a["name"], a["slug"]
     dist, mins = road(a)
+    far = a.get("far", False)
     photos, real = pick_photos(a, i)
     # optional per-suburb overrides in areas_data.py ("title", "description"), e.g. set by the SEO review
     title = a.get("title") or f"Carpenter & Renovations in {name} | {BRAND}"
     desc = a.get("description") or (f"Renovation and woodwork in {name}, Cape Town: kitchens, built-in cupboards, doors, garage doors"
-            f"{', pool decks' if 'pool' in a['profile'] else ''} and furniture. Workshop {mins} min away in Maitland. Quotes 24/7, fixed prices.")
+            f"{', pool decks' if 'pool' in a['profile'] else ''} and furniture. " + ("Based in Maitland, Cape Town, working across South Africa." if far else f"Workshop {mins} min away in Maitland.") + " Quotes 24/7, fixed prices.")
     canonical = f"{DOMAIN}/areas/{slug}/"
     faqs = [
+        (f"How do projects in {name} work?", "We're based in Maitland, Cape Town. For projects further away we agree the scope, materials and timeline upfront, then build and install.") if far else
         (f"Do you work in {name}?", f"Yes. Our workshop is in Maitland, about {dist} km from {name} (roughly {mins} minutes' drive), so we can come out to measure and quote quickly."),
         (f"How much does a renovation or carpentry job in {name} cost?", "Every job is priced for your space, materials and finishes. After a free site visit you get a written, itemised quote, and once you accept it the price is fixed: we never come back to ask for more."),
         (f"How do I get a quote in {name}?", "WhatsApp us photos and rough measurements, any time, 24/7. We'll reply with next steps and arrange a free site visit."),
@@ -224,8 +226,7 @@ def area_page(a, i, caps, nearby):
       <a class="btn btn--ghost" href="tel:{TEL}">Call {PHONE}</a>
     </div>
     <ul class="area-facts mono">
-      <li><b>~{dist} km</b> from our Maitland workshop</li>
-      <li><b>~{mins} min</b> drive</li>
+      {"<li><b>SA-wide</b> projects outside the Western Cape</li><li><b>Planned</b> scope and timeline agreed upfront</li>" if far else f"<li><b>~{dist} km</b> from our Maitland workshop</li><li><b>~{mins} min</b> drive</li>"}
       <li><b>24/7</b> quote requests</li>
       <li><b>Fixed</b> price, no surprises</li>
     </ul>
@@ -307,7 +308,7 @@ def hub_page():
     desc = "Carpentry and renovation from our workshop in Maitland, Cape Town, for projects anywhere in South Africa. Examples of recent work areas: Woodstock, Observatory, Gardens, Sea Point, Rondebosch, Pinelands, Milnerton and more."
     groups = ""
     for ri, rname in enumerate(REGIONS):
-        items = "".join(f'<li><a href="{x["slug"]}/"><b>{E(x["name"])}</b><span>~{road(x)[1]} min from the workshop</span></a></li>'
+        items = "".join(f'<li><a href="{x["slug"]}/"><b>{E(x["name"])}</b><span>{"Projects outside the Western Cape" if x.get("far") else f"~{road(x)[1]} min from the workshop"}</span></a></li>'
                         for x in AREAS if x["region"] == ri)
         groups += f'<h2 class="sec-title hub-region">{E(rname)}</h2><ul class="hub-list">{items}</ul>'
     ld = {"@context": "https://schema.org", "@graph": [business_ld()]}
@@ -420,11 +421,16 @@ def main():
     # home page: area links
     hp = os.path.join(SITE, "index.html")
     t = open(hp, encoding="utf-8").read()
-    links = "".join(f'<li><a href="areas/{x["slug"]}/">{E(x["name"])}</a></li>' for x in AREAS)
+    half = (len(AREAS) + 1) // 2  # show half the list until "Show all" is clicked
+    links = "".join(f'<li{" class=" + chr(34) + "more" + chr(34) if k >= half else ""}><a href="areas/{x["slug"]}/">{E(x["name"])}</a></li>'
+                    for k, x in enumerate(AREAS))
     box = ('<div class="areas">\n        <h3 class="mono">Recent work areas</h3>\n'
            '        <p class="areas-intro">We work anywhere in South Africa. These are examples of areas where we\'ve worked recently.</p>\n'
-           f'        <ul class="mono">{links}</ul>\n        <p class="areas-all"><a href="areas/">All areas we serve →</a></p>\n      </div>')
-    t, n = re.subn(r'<div class="areas">.*?</ul>\s*(?:<p class="areas-all">.*?</p>\s*)?</div>', lambda m: box, t, count=1, flags=re.S)
+           f'        <ul class="mono">{links}</ul>\n'
+           f'        <button class="areas-toggle mono" type="button" data-areas-toggle data-count="{len(AREAS)}" aria-expanded="false">Show all {len(AREAS)} areas ↓</button>\n'
+           '        <p class="areas-all"><a href="areas/">All areas we serve →</a></p>\n      </div>')
+    t, n = re.subn(r'<div class="areas">.*?</ul>\s*(?:<button class="areas-toggle.*?</button>\s*)?(?:<p class="areas-all">.*?</p>\s*)?</div>',
+                   lambda m: box, t, count=1, flags=re.S)
     assert n == 1
     if 'href="areas/">Areas</a>' not in t:
         t = t.replace('<a href="#about">Who we are</a>', '<a href="areas/">Areas</a>\n      <a href="#about">Who we are</a>', 1)
