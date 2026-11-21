@@ -101,13 +101,12 @@ def footer(root):
     <div class="footer-grid mono">
       <span>© <span id="year">{date.today().year}</span> {E(BRAND)} · Unit 4, 7th Avenue Business Park, Maitland, Cape Town</span>
       <span><a href="{root}areas/">Areas we serve</a> · Anywhere in South Africa · <a href="{root}privacy/">Privacy</a></span>
-      <span><a href="#" data-wa>WhatsApp {PHONE}</a> · <a href="#top">Back to top ↑</a></span>
+      <span><a href="tel:{TEL}">{PHONE}</a> · <a href="#top">Back to top ↑</a></span>
     </div>
   </div>
 </footer>
 <nav class="mobile-bar" aria-label="Quick contact">
-  <a href="tel:{TEL}">Call</a>
-  <a href="#" data-wa-area class="mb-wa">WhatsApp</a>
+  <a href="tel:{TEL}">{PHONE}</a>
   <a href="{root}#contact">Quote</a>
 </nav>
 <a class="wa-float" href="#" data-wa-area aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg></a>
