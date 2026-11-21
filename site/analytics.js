@@ -1,7 +1,7 @@
 /* Google Analytics 4 + cookie notice for every page.
    To switch analytics on, put the Measurement ID from GA4 here (looks like "G-AB12CD34EF").
    While it is "G-XXXXXXXXXX", nothing is loaded and no cookie notice is shown. */
-const GA_ID = "G-XXXXXXXXXX";
+const GA_ID = "G-QT5TJW291V";
 
 (function () {
   if (!/^G-[A-Z0-9]{6,}$/.test(GA_ID) || GA_ID === "G-XXXXXXXXXX") return;
