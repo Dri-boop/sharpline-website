@@ -10,3 +10,7 @@ __pycache__/
 *.pyc
 .DS_Store
 Thumbs.db
+
+# Photos prepared for the Google Business Profile (copies of site images)
+google-business-photos/
+brand/*.tmp

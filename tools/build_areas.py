@@ -49,15 +49,15 @@ def road(a):
 def captions_from_home():
     t = open(os.path.join(SITE, "index.html"), encoding="utf-8").read()
     caps = {}
-    for name, cap in re.findall(r'img/([a-z]+-\d+)-sm\.jpg".*?<figcaption class="mono">(.*?) <span>', t):
+    for name, cap in re.findall(r'img/([a-z]+-\d+)-sm\.jpg".*?<figcaption class="mono">(.*?)(?: <span>|</figcaption>)', t):
         caps[name] = html.unescape(cap)
     return caps
 
 
 def pick_photos(area, i):
-    if area.get("real_photos"):
-        return area["real_photos"][:6], True
-    chosen, pools = [], [PHOTO_POOLS[p] for p in area["profile"]]
+    """Real photos from that suburb first (captioned with the suburb), then example photos to fill 6 slots."""
+    real = list(area.get("real_photos", []))[:6]
+    chosen, pools = list(real), [PHOTO_POOLS[p] for p in area["profile"]]
     k = 0
     while len(chosen) < 6 and k < 60:
         pool = pools[k % len(pools)]
@@ -65,7 +65,7 @@ def pick_photos(area, i):
         if cand not in chosen:
             chosen.append(cand)
         k += 1
-    return chosen, False
+    return chosen, real
 
 
 def header(root):
@@ -186,11 +186,19 @@ def area_page(a, i, caps, nearby):
     for p in photos:
         w, h = Image.open(os.path.join(SITE, "img", f"{p}-sm.jpg")).size
         cap = caps.get(p, "Our work")
-        label = f"{cap} · {name}" if real else cap
-        alt = f"{cap}, {'in ' + name + ', ' if real else ''}by {BRAND}"
-        figs.append(f'<figure><img src="{root}img/{p}-sm.jpg" width="{w}" height="{h}" loading="lazy" decoding="async" alt="{E(alt)}"><figcaption class="mono">{E(label)}</figcaption></figure>')
-    gallery_title = f"Our work in {name}" if real else "Examples of our work"
-    gallery_note = "" if real else f"<p class=\"area-note\">A selection from our projects across Cape Town. We're adding more {E(name)} projects soon.</p>"
+        is_real = p in real
+        label = f"{cap} · {name}" if is_real else cap
+        alt = f"{cap}, {'in ' + name + ', ' if is_real else ''}by {BRAND}"
+        cls = ' class="real"' if is_real else ""
+        figs.append(f'<figure{cls}><img src="{root}img/{p}-sm.jpg" width="{w}" height="{h}" loading="lazy" decoding="async" alt="{E(alt)}"><figcaption class="mono">{E(label)}</figcaption></figure>')
+    if real and len(real) >= len(photos):
+        gallery_title, gallery_note = f"Our work in {name}", ""
+    elif real:
+        gallery_title = f"Our work in {name}"
+        gallery_note = f"<p class=\"area-note\">Projects in {E(name)} first, then more examples from across Cape Town.</p>"
+    else:
+        gallery_title = "Examples of our work"
+        gallery_note = f"<p class=\"area-note\">A selection from our projects across Cape Town. We're adding more {E(name)} projects soon.</p>"
     nb = "".join(f'<li><a href="../{n["slug"]}/">{E(n["name"])}</a></li>' for n in nearby)
     jobs = "".join(f"<li>{E(j)}</li>" for j in a["jobs"])
     svc = "".join(f'<li><h3>{E(t)} <span>in {E(name)}</span></h3><p>{E(d)}</p></li>' for t, d in services)

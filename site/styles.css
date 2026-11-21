@@ -457,11 +457,11 @@ section { border-bottom: var(--line); }
 .motion-grid { display: grid; grid-template-columns: 9fr 28.4fr; gap: 14px; align-items: start; }
 .motion-grid figure { margin: 0; border: 2px solid var(--sawdust); background: #2b2a27; display: flex; flex-direction: column; min-width: 0; }
 .motion-grid video { width: 100%; display: block; object-fit: cover; aspect-ratio: 16 / 9; }
-.motion-grid figure:first-child video { aspect-ratio: 9 / 16; }
+.motion-grid figure:nth-child(odd) video { aspect-ratio: 9 / 16; }
 .motion-grid figcaption { background: var(--sawdust); color: var(--ink); padding: 8px 10px; }
 @media (max-width: 700px) {
   .motion-grid { grid-template-columns: 1fr; }
-  .motion-grid figure:first-child video { max-height: 75vh; }
+  .motion-grid figure:nth-child(odd) video { max-height: 75vh; }
 }
 
 /* ---------- pricing process ---------- */
@@ -585,3 +585,9 @@ section { border-bottom: var(--line); }
 .firm-price h3 { margin: 0 0 4px; font-size: clamp(1.05rem, 2vw, 1.35rem); }
 .firm-price p { font-size: .95rem; }
 @media (max-width: 560px) { .firm-price { grid-template-columns: auto 1fr; } .firm-stamp { width: 60px; height: 60px; font-size: .52rem; } }
+
+/* ---------- team photo ---------- */
+.about-photos--team { display: block; }
+.team-fig { margin: 0; border: var(--line); background: var(--sawdust); }
+.team-fig img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 0 !important; margin: 0 !important; }
+.team-fig figcaption { padding: 8px 12px; border-top: var(--line); }

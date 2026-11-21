@@ -196,3 +196,53 @@ AREAS = [
        jobs=["Family kitchens", "Aluminium garage doors and front doors", "Decks and pool decks"],
        faq=("What doors cope best with the wind in Table View?", "Solid, well-fitted doors with good seals; for garages, aluminium works well near the coast. We'll recommend what suits your home.")),
 ]
+
+# ---------- suburbs confirmed by Charles's job photos (Nov 2026) ----------
+AREAS += [
+  dict(slug="khayelitsha", name="Khayelitsha", region=2, lat=-34.0400, lon=18.6770, profile=["family", "compact"],
+       intro="We've fitted built-in wardrobes in Litha Park, Khayelitsha, and we're about 25 minutes away from our Maitland workshop.",
+       homes="Khayelitsha has family homes of every size, many extended over the years, where built-in cupboards, kitchens and solid doors make the most of every room.",
+       jobs=["Sliding-door built-in wardrobes", "Kitchen cupboards", "Doors, security doors and gates"],
+       faq=("Have you worked in Khayelitsha before?", "Yes. We've built and fitted sliding-door wardrobes with shelving in Litha Park, and we're happy to quote for homes anywhere in Khayelitsha.")),
+  dict(slug="langa", name="Langa", region=0, lat=-33.9450, lon=18.5280, profile=["compact", "family"],
+       intro="Langa is about 10 minutes from our Maitland workshop, and we've recently finished a kitchenette and bathroom job there.",
+       homes="Langa has compact family homes and backyard units, where a well-planned kitchenette, cupboards and a tidy bathroom make a big difference.",
+       jobs=["Kitchenettes for homes and backyard units", "Built-in cupboards", "Bathroom vanities"],
+       faq=("Do you clean up after a job in Langa?", "Always. Every job ends with a full clean-up, so you get your home back ready to use.")),
+  dict(slug="blue-downs", name="Blue Downs", region=3, lat=-33.9930, lon=18.6950, profile=["family"],
+       intro="We've installed a full gloss kitchen in Blue Downs, about 25 minutes from our Maitland workshop.",
+       homes="Blue Downs has family homes where kitchens, built-in cupboards and TV units are the most popular upgrades.",
+       jobs=["Gloss kitchens with granite tops", "Built-in wardrobes", "TV and wall units"],
+       faq=("Have you done kitchens in Blue Downs?", "Yes. We've built and installed a white gloss kitchen with granite tops there, from measuring to final fitting.")),
+  dict(slug="lansdowne", name="Lansdowne", region=2, lat=-33.9890, lon=18.5050, profile=["compact", "family"],
+       intro="We've fitted a white kitchenette in Lansdowne, about 15 minutes from our Maitland workshop.",
+       homes="Lansdowne has established family homes and flats, where compact kitchens and good storage are in demand.",
+       jobs=["Kitchenettes and compact kitchens", "Built-in cupboards", "Doors and gates"],
+       faq=("Can you fit a kitchenette in a small space in Lansdowne?", "Yes. We design kitchenettes around the space you have, with tall units and open shelving where they help.")),
+  dict(slug="bloubergstrand", name="Blouberg", region=3, lat=-33.8000, lon=18.4700, profile=["family", "coastal", "pool"],
+       intro="We've installed a kitchen in Blouberg, about 25 minutes up the coast from our Maitland workshop.",
+       homes="Blouberg has family homes close to the beach, where sea air and sand are hard on hardware, so finishes have to be chosen with care.",
+       jobs=["Kitchens with moisture-resistant finishes", "Laundry and kitchen combinations", "Decks and outdoor timber"],
+       faq=("Have you installed kitchens in Blouberg?", "Yes. We've fitted a white kitchen with a teal splashback and laundry space there, using finishes suited to the coast.")),
+  dict(slug="devils-peak", name="Devil's Peak", region=1, lat=-33.9370, lon=18.4300, profile=["pool", "apartment", "heritage"],
+       intro="We've built a hardwood roof deck and measured up an office fit-out in Devil's Peak, about 20 minutes from our Maitland workshop.",
+       homes="Devil's Peak has homes and apartments on the mountain slopes with views over the city, and plenty of roof terraces and decks that need durable timber.",
+       jobs=["Hardwood roof decks", "Office and home-office fit-outs", "Built-in cupboards"],
+       faq=("Can you build a roof deck in Devil's Peak?", "Yes. We've built a hardwood roof deck there, using durable timber and stainless fixings for the wind and sun.")),
+]
+
+REAL_PHOTOS = {
+  "rondebosch": ["reno-01", "reno-02"],
+  "green-point": ["kitchen-36", "kitchen-37"],
+  "brooklyn": ["kitchen-09"],
+  "athlone": ["kitchen-17"],
+  "khayelitsha": ["wardrobe-13", "wardrobe-14", "wardrobe-06", "wardrobe-07", "wardrobe-08"],
+  "langa": ["team-02"],
+  "blue-downs": ["kitchen-29", "team-03"],
+  "lansdowne": ["kitchen-11"],
+  "bloubergstrand": ["kitchen-04", "kitchen-08", "team-04"],
+  "devils-peak": ["outdoor-03", "outdoor-04", "team-01"],
+}
+for _a in AREAS:
+    if _a["slug"] in REAL_PHOTOS:
+        _a["real_photos"] = REAL_PHOTOS[_a["slug"]]
