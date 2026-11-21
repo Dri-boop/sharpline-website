@@ -591,3 +591,25 @@ section { border-bottom: var(--line); }
 .team-fig { margin: 0; border: var(--line); background: var(--sawdust); }
 .team-fig img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 0 !important; margin: 0 !important; }
 .team-fig figcaption { padding: 8px 12px; border-top: var(--line); }
+
+/* ---------- cookie notice (analytics.js) ---------- */
+.cookie-notice {
+  position: fixed; left: 18px; bottom: 18px; z-index: 80;
+  max-width: 440px; padding: 18px 20px;
+  background: var(--sawdust); color: var(--ink);
+  border: var(--line); box-shadow: 6px 6px 0 var(--ink);
+}
+.cookie-notice p { margin: 0 0 14px; font-size: .9rem; line-height: 1.45; }
+.cookie-notice a { color: var(--ink); }
+.cookie-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.cookie-actions .btn { cursor: pointer; padding: .8em 1.2em; }
+@media (max-width: 700px) {
+  .cookie-notice { left: 10px; right: 10px; bottom: 64px; max-width: none; }
+}
+
+/* ---------- privacy page ---------- */
+.legal { max-width: 760px; }
+.legal h2 { margin: 40px 0 10px; font: 700 1.25rem/1.2 var(--f-display); }
+.legal p, .legal li { line-height: 1.6; }
+.legal ul { padding-left: 1.2em; }
+.legal .updated { color: var(--ink-soft); }

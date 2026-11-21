@@ -4,6 +4,8 @@ the area links on the home page and sitemap.xml.
 Run from the project folder:   python tools/build_areas.py
 Edit suburb content in tools/areas_data.py. When Charles confirms a real project in a suburb, add
 real_photos=["kitchen-07", ...] to that suburb's entry: those photos are then captioned with the suburb.
+Optional per-suburb "title" and "description" keys replace the default <title> and meta description.
+Also builds the privacy policy page (site/privacy/index.html).
 """
 import html, json, math, os, re, sys
 from datetime import date
@@ -18,6 +20,7 @@ DOMAIN = "https://sharplinerenovation.co.za"   # TODO: real domain
 BRAND = "Sharpline Renovation & Woodworks"
 PHONE = "+27 67 617 7735"
 TEL = "+27676177735"
+PRIVACY_UPDATED = "21 November 2026"   # change when the privacy policy text changes
 E = html.escape
 
 PHOTO_POOLS = {
@@ -97,7 +100,7 @@ def footer(root):
     <span class="saw" aria-hidden="true"></span>
     <div class="footer-grid mono">
       <span>© <span id="year">{date.today().year}</span> {E(BRAND)} · Unit 4, 7th Avenue Business Park, Maitland, Cape Town</span>
-      <span><a href="{root}areas/">Areas we serve</a> · Anywhere in South Africa</span>
+      <span><a href="{root}areas/">Areas we serve</a> · Anywhere in South Africa · <a href="{root}privacy/">Privacy</a></span>
       <span><a href="#" data-wa>WhatsApp {PHONE}</a> · <a href="#top">Back to top ↑</a></span>
     </div>
   </div>
@@ -108,7 +111,8 @@ def footer(root):
   <a href="{root}#contact">Quote</a>
 </nav>
 <a class="wa-float" href="#" data-wa-area aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg></a>
-<script src="{root}area.js"></script>'''
+<script src="{root}area.js"></script>
+<script src="{root}analytics.js"></script>'''
 
 
 def head(title, desc, canonical, root, ld):
@@ -154,8 +158,9 @@ def area_page(a, i, caps, nearby):
     name, slug = a["name"], a["slug"]
     dist, mins = road(a)
     photos, real = pick_photos(a, i)
-    title = f"Carpenter & Renovations in {name} | {BRAND}"
-    desc = (f"Renovation and woodwork in {name}, Cape Town: kitchens, built-in cupboards, doors, garage doors"
+    # optional per-suburb overrides in areas_data.py ("title", "description"), e.g. set by the SEO review
+    title = a.get("title") or f"Carpenter & Renovations in {name} | {BRAND}"
+    desc = a.get("description") or (f"Renovation and woodwork in {name}, Cape Town: kitchens, built-in cupboards, doors, garage doors"
             f"{', pool decks' if 'pool' in a['profile'] else ''} and furniture. Workshop {mins} min away in Maitland. Quotes 24/7, fixed prices.")
     canonical = f"{DOMAIN}/areas/{slug}/"
     faqs = [
@@ -333,6 +338,74 @@ def hub_page():
 '''
 
 
+def privacy_page():
+    root = "../"
+    title = f"Privacy policy | {BRAND}"
+    desc = f"How {BRAND} collects, uses and protects your personal information under POPIA, and how we use Google Analytics cookies."
+    ld = {"@context": "https://schema.org", "@graph": [business_ld()]}
+    return f'''{head(title, desc, f"{DOMAIN}/privacy/", root, ld)}
+<body data-area="Cape Town">
+{header(root)}
+<main id="main">
+<section class="area-hero">
+  <div class="wrap">
+    <nav class="crumbs mono" aria-label="Breadcrumb"><a href="{root}">Home</a> / <span>Privacy</span></nav>
+    <h1>Privacy <span class="hl">policy</span></h1>
+    <p class="area-lede">How we handle your personal information, in plain language, as required by the Protection of Personal Information Act (POPIA).</p>
+  </div>
+</section>
+<div class="saw saw--band" aria-hidden="true"></div>
+<section class="sec">
+  <div class="wrap legal">
+    <p class="updated mono">Last updated: {PRIVACY_UPDATED}</p>
+
+    <h2>Who we are</h2>
+    <p>{E(BRAND)}, Unit 4, 7th Avenue Business Park, Maitland, Cape Town. Our Information Officer is the owner, Charles Zeka. Contact us on WhatsApp or by phone: <a href="tel:{TEL}">{PHONE}</a>.</p>
+
+    <h2>What we collect</h2>
+    <ul>
+      <li><b>What you send us.</b> When you WhatsApp us, call us or use the quote form, we receive what you share: usually your name, phone number, suburb, project details and photos of the space.</li>
+      <li><b>Website statistics.</b> If you click <b>OK</b> on the cookie notice, Google Analytics records how the site is used: pages viewed, the type of device and browser, your approximate area (city level) and how you found us (for example a Google search). It also counts clicks on our WhatsApp and phone buttons and quote form sends. We do not see your name or phone number in these statistics.</li>
+    </ul>
+    <p>The quote form does not store your details on this website. It opens WhatsApp with your message ready, and you choose to send it.</p>
+
+    <h2>Why we use it</h2>
+    <ul>
+      <li>To reply to you, visit, measure, quote and do the work you ask for.</li>
+      <li>To keep records we need for our business and for tax.</li>
+      <li>To understand which pages help people, so we can improve the website.</li>
+    </ul>
+    <p>We never sell your information, and we do not use it for advertising.</p>
+
+    <h2>Who else handles it</h2>
+    <ul>
+      <li><b>WhatsApp (Meta)</b>, when you message us on WhatsApp.</li>
+      <li><b>Google</b>, for Google Analytics statistics (only if you click OK).</li>
+      <li><b>GitHub</b>, which hosts this website and keeps normal server logs.</li>
+    </ul>
+    <p>These companies may store data outside South Africa, under their own privacy and security rules.</p>
+
+    <h2>Cookies</h2>
+    <p>We only use Google Analytics cookies (named <code>_ga</code> and <code>_ga_…</code>), and only after you click <b>OK</b>. If you click <b>No thanks</b>, no analytics cookies are set; Google may still receive a basic, cookie-free signal that a page was viewed. We do not use advertising cookies. Your choice is saved in your browser.</p>
+    <p><a class="btn btn--ghost" href="#" data-cookie-settings>Change cookie settings</a></p>
+
+    <h2>How long we keep it</h2>
+    <p>We keep quote and project details for as long as we need them for the job and for our business and tax records. Google Analytics statistics are deleted automatically after 14 months.</p>
+
+    <h2>Your rights</h2>
+    <p>You can ask us what personal information we hold about you, and ask us to correct or delete it. You can also object to how we use it. Just contact us on WhatsApp or by phone. If you are not happy with our answer, you can complain to the Information Regulator of South Africa: <a href="https://inforegulator.org.za" rel="noopener">inforegulator.org.za</a>.</p>
+
+    <h2>Security</h2>
+    <p>We take reasonable steps to keep your information safe and only share it with the people who need it to do your job.</p>
+  </div>
+</section>
+</main>
+{footer(root)}
+</body>
+</html>
+'''
+
+
 def main():
     caps = captions_from_home()
     for i, a in enumerate(AREAS):
@@ -341,6 +414,8 @@ def main():
         os.makedirs(d, exist_ok=True)
         open(os.path.join(d, "index.html"), "w", encoding="utf-8").write(area_page(a, i, caps, others))
     open(os.path.join(SITE, "areas", "index.html"), "w", encoding="utf-8").write(hub_page())
+    os.makedirs(os.path.join(SITE, "privacy"), exist_ok=True)
+    open(os.path.join(SITE, "privacy", "index.html"), "w", encoding="utf-8").write(privacy_page())
 
     # home page: area links
     hp = os.path.join(SITE, "index.html")
