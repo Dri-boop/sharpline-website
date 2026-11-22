@@ -122,7 +122,7 @@ Last updated: 2026-11-22.
 - Copy was tightened site-wide on request; keep new copy short.
 - No Facebook page yet (later).
 - "Who we are" has a team carousel (`.team-track`, script in `main.js`):
-  stools photo first (`team-05`, owner's choice; caption names no people), then
+  stools photo first (`team-05`, owner's choice; caption "Charles with a team member and a customer"), then
   team-charles and team-01..04. More team photos can be added as slides.
 - Header has no "Pricing" link (owner's request).
 - Area pages (template in `build_areas.py`): intro = `homes` text + "We're often
