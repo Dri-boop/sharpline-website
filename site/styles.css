@@ -197,8 +197,7 @@ section { border-bottom: var(--line); }
 /* ---------- services ---------- */
 .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); border: var(--line); background: var(--concrete-lt); }
 .svc {
-  position: relative; padding: 30px 28px 34px; border-right: var(--line); border-bottom: var(--line);
-  min-height: 300px; display: flex; flex-direction: column;
+  position: relative; padding: 20px 22px 22px; border-right: var(--line); border-bottom: var(--line); display: flex; flex-direction: column;
   transition: color .2s;
   isolation: isolate;
 }
@@ -213,8 +212,8 @@ section { border-bottom: var(--line); }
 .svc:hover { color: var(--sawdust); }
 .svc:hover .svc-n { color: var(--ink); }
 .svc-n { font: 500 .64rem var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--crayon); }
-.svc h3 { margin: 18px 0 12px; font: 700 1.45rem/1.05 var(--f-display); letter-spacing: -.02em; }
-.svc p { margin: 0 0 18px; }
+.svc h3 { margin: 10px 0 8px; font: 700 1.45rem/1.05 var(--f-display); letter-spacing: -.02em; }
+.svc p { margin: 0 0 14px; }
 .svc ul { margin: auto 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
 .svc li { font: 500 .56rem var(--f-mono); text-transform: uppercase; letter-spacing: .08em; border: var(--line-thin); padding: 4px 8px; }
 .svc:hover li { border-color: var(--sawdust); }
