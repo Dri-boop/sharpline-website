@@ -3,13 +3,13 @@
 Everything a fresh session needs. `README.md` covers day-to-day operation;
 this file covers context, decisions and traps.
 
-Last updated: 2026-11-21.
+Last updated: 2026-11-22.
 
 ## 1. The business
 
 - **Sharpline Renovation & Woodworks** (the old name "Sharpline Woodworks" is
   only the second domain and the Gmail address).
-- Owner **Charles Zeka**: 15+ years, trained and ran a workshop in Malawi,
+- Owner **Charles Zeka** (founder card photo: glove selfie, `raw/new3/`): 15+ years, ran his own workshop before Sharpline,
   team of 4 permanent + contractors. Selling point: trustworthy, fixed price,
   does the right job until the client is happy.
 - Workshop: Unit 4, 7th Avenue Business Park, Maitland, Cape Town 7405
@@ -113,7 +113,7 @@ Last updated: 2026-11-21.
 
 - Confirmed by the owner: payment split 50/40/10, 12-month workmanship
   guarantee, site-work hours Mon–Fri 07:30–17:00 / Sat 08:00–13:00,
-  postcode 7405. Do not mention languages.
+  postcode 7405. Do not mention languages or where Charles is from.
 - Google Business Profile: https://maps.app.goo.gl/niwRVW97kVKSbcyAA (contact
   line, workshop "Get directions", JSON-LD `sameAs`/`hasMap` on all pages).
 - "References from past clients available on request" is on the site
@@ -121,11 +121,10 @@ Last updated: 2026-11-21.
 - Copy was tightened site-wide on request; keep new copy short.
 - No Facebook page yet (later).
 - Waiting on files from the owner (to be saved in `raw/new3/`):
-  1. Charles selfie with glove + timber frame → founder card photo.
-  2. Team photos (two men in a roof, Charles with glove, measuring) →
+  1. Team photos (two men in a roof, Charles with glove, measuring) →
      team carousel in "Who we are" (same style as the jobs viewer).
-  3. Floor framing over insulation, office partition wall, white/pine tables
+  2. Floor framing over insulation, office partition wall, white/pine tables
      and benches, Durban 2021 pool project tray.
-  4. Charles's Google Drive videos (`VID_2025…`) from the email.
+  3. Charles's Google Drive videos (`VID_2025…`) from the email.
 - Photos pasted into chat while Claude is mid-turn are NOT saved to disk;
   ask the owner to save files into `raw/` instead.
