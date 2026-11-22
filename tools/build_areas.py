@@ -20,7 +20,7 @@ DOMAIN = "https://sharplinerenovation.co.za"   # TODO: real domain
 BRAND = "Sharpline Renovation & Woodworks"
 PHONE = "+27 67 617 7735"
 TEL = "+27676177735"
-PRIVACY_UPDATED = "21 November 2026"   # change when the privacy policy text changes
+PRIVACY_UPDATED = "22 November 2026"   # change when the privacy policy text changes
 E = html.escape
 
 PHOTO_POOLS = {
@@ -30,7 +30,7 @@ PHOTO_POOLS = {
     "family":    ["kitchen-01", "kitchen-25", "kitchen-02", "kitchen-26", "kitchen-04", "kitchen-30", "kitchen-07", "kitchen-29",
                   "kitchen-14", "kitchen-05", "doors-02", "wardrobe-02", "wardrobe-04", "doors-10"],
     "coastal":   ["doors-01", "doors-19", "kitchen-24", "doors-06", "doors-08"],
-    "rental":    ["kitchen-21", "kitchen-17", "wardrobe-09", "kitchen-12", "furniture-13", "kitchen-27"],
+    "rental":    ["kitchen-21", "kitchen-17", "wardrobe-09", "kitchen-12", "wardrobe-10", "kitchen-27"],
     "apartment": ["kitchen-15", "kitchen-24", "wardrobe-05", "kitchen-10", "wardrobe-11", "tv-04"],
 }
 
@@ -83,7 +83,6 @@ def header(root):
     <button class="nav-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><span></span><span></span><span></span></button>
     <nav class="nav" id="nav" aria-label="Main">
       <a href="{root}#services">Services</a>
-      <a href="{root}#prices">Pricing</a>
       <a href="{root}#work">Our work</a>
       <a href="{root}areas/">Areas</a>
       <a href="{root}#about">Who we are</a>
@@ -208,6 +207,9 @@ def area_page(a, i, caps, nearby):
         gallery_note = f"<p class=\"area-note\">A selection from our projects across Cape Town. We're adding more {E(name)} projects soon.</p>"
     nb = "".join(f'<li><a href="../{n["slug"]}/">{E(n["name"])}</a></li>' for n in nearby)
     jobs = "".join(f"<li>{E(j)}</li>" for j in a["jobs"])
+    low = lambda j: j[0].lower() + j[1:] if len(j) > 1 and j[1].islower() else j
+    js = [low(j) for j in a["jobs"]]
+    jobs_text = ", ".join(js[:-1]) + (", and " if len(js) > 2 else " and ") + js[-1] if len(js) > 1 else js[0]
     svc = "".join(f'<li><h3>{E(t)} <span>in {E(name)}</span></h3><p>{E(d)}</p></li>' for t, d in services)
     faq_html = "".join(f"<details><summary>{E(q)}</summary><p>{E(ans)}</p></details>" for q, ans in faqs)
 
@@ -220,39 +222,19 @@ def area_page(a, i, caps, nearby):
     <nav class="crumbs mono" aria-label="Breadcrumb"><a href="{root}">Home</a> / <a href="../">Areas</a> / <span>{E(name)}</span></nav>
     <span class="hero-kicker mono">Carpenter · Joiner · Renovations — {E(name)}, Cape Town</span>
     <h1>Renovation &amp; woodworks in <span class="hl">{E(name)}</span></h1>
-    <p class="area-lede">{E(a["intro"])} Kitchens, cupboards, doors and renovations at a fixed price.</p>
+    <p class="area-lede">{E(a["homes"])} We're often asked for {E(jobs_text)}.</p>
     <div class="hero-actions">
       <a class="btn btn--wa" href="#" data-wa-area>Get a quote in {E(name)}</a>
       <a class="btn btn--ghost" href="tel:{TEL}">Call {PHONE}</a>
     </div>
     <ul class="area-facts mono">
-      {"<li><b>SA-wide</b> projects outside the Western Cape</li><li><b>Planned</b> scope and timeline agreed upfront</li>" if far else f"<li><b>~{dist} km</b> from our Maitland workshop</li><li><b>~{mins} min</b> drive</li>"}
-      <li><b>24/7</b> quote requests</li>
-      <li><b>Fixed</b> price, no surprises</li>
+      {"<li><b>SA-wide</b> projects</li><li><b>Planned</b> upfront</li>" if far else f"<li><b>~{dist} km</b> from Maitland</li><li><b>~{mins} min</b> drive</li>"}
+      <li><b>24/7</b> quotes</li>
+      <li><b>Fixed</b> price</li>
     </ul>
   </div>
 </section>
 <div class="saw saw--band" aria-hidden="true"></div>
-
-<section class="sec area-homes">
-  <div class="wrap area-two">
-    <div>
-      <h2 class="sec-title">Homes in {E(name)}</h2>
-      <p>{E(a["homes"])}</p>
-    </div>
-    <div class="area-jobs">
-      <h3 class="mono">What we're often asked to do in {E(name)}</h3>
-      <ul>{jobs}</ul>
-    </div>
-  </div>
-</section>
-
-<section class="sec">
-  <div class="wrap">
-    <h2 class="sec-title">Carpentry &amp; renovation services in {E(name)}</h2>
-    <ul class="area-services">{svc}</ul>
-  </div>
-</section>
 
 <section class="sec work">
   <div class="wrap">
@@ -265,13 +247,8 @@ def area_page(a, i, caps, nearby):
 
 <section class="sec">
   <div class="wrap">
-    <div class="firm-price">
-      <span class="firm-stamp" aria-hidden="true">Fixed<br>price</span>
-      <div>
-        <h3>Our price is our price.</h3>
-        <p>Fixed once you say yes. No extras.</p>
-      </div>
-    </div>
+    <h2 class="sec-title">Carpentry &amp; renovation services in {E(name)}</h2>
+    <ul class="area-services">{svc}</ul>
   </div>
 </section>
 
@@ -366,7 +343,7 @@ def privacy_page():
     <h2>What we collect</h2>
     <ul>
       <li><b>What you send us.</b> When you WhatsApp us, call us or use the quote form, we receive what you share: usually your name, phone number, suburb, project details and photos of the space.</li>
-      <li><b>Website statistics.</b> If you click <b>OK</b> on the cookie notice, Google Analytics records how the site is used: pages viewed, the type of device and browser, your approximate area (city level) and how you found us (for example a Google search). It also counts clicks on our WhatsApp and phone buttons and quote form sends. We do not see your name or phone number in these statistics.</li>
+      <li><b>Website statistics.</b> Google Analytics records how the site is used: pages viewed, the type of device and browser, your approximate area (city level) and how you found us (for example a Google search). It also counts clicks on our WhatsApp and phone buttons and quote form sends. We do not see your name or phone number in these statistics.</li>
     </ul>
     <p>The quote form does not store your details on this website. It opens WhatsApp with your message ready, and you choose to send it.</p>
 
@@ -381,14 +358,14 @@ def privacy_page():
     <h2>Who else handles it</h2>
     <ul>
       <li><b>WhatsApp (Meta)</b>, when you message us on WhatsApp.</li>
-      <li><b>Google</b>, for Google Analytics statistics (only if you click OK).</li>
+      <li><b>Google</b>, for Google Analytics statistics.</li>
       <li><b>GitHub</b>, which hosts this website and keeps normal server logs.</li>
     </ul>
     <p>These companies may store data outside South Africa, under their own privacy and security rules.</p>
 
     <h2>Cookies</h2>
-    <p>We only use Google Analytics cookies (named <code>_ga</code> and <code>_ga_…</code>), and only after you click <b>OK</b>. If you click <b>No thanks</b>, no analytics cookies are set; Google may still receive a basic, cookie-free signal that a page was viewed. We do not use advertising cookies. Your choice is saved in your browser.</p>
-    <p><a class="btn btn--ghost" href="#" data-cookie-settings>Change cookie settings</a></p>
+    <p>We only use Google Analytics cookies (named <code>_ga</code> and <code>_ga_…</code>) to count visits. We do not use advertising cookies. You can turn statistics off for this browser with the button below; Google may then still receive a basic, cookie-free signal that a page was viewed.</p>
+    <p><a class="btn btn--ghost" href="#" data-analytics-optout>Turn off statistics</a></p>
 
     <h2>How long we keep it</h2>
     <p>We keep quote and project details for as long as we need them for the job and for our business and tax records. Google Analytics statistics are deleted automatically after 14 months.</p>

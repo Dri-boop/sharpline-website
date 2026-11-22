@@ -515,17 +515,17 @@ section { border-bottom: var(--line); }
 
 /* ---------- area (suburb) pages ---------- */
 .area-hero { border-bottom: var(--line); }
-.area-hero .wrap { padding-top: clamp(32px, 5vw, 64px); padding-bottom: clamp(36px, 5vw, 64px); }
+.area-hero .wrap { padding-top: clamp(28px, 4vw, 52px); padding-bottom: clamp(28px, 4vw, 44px); }
 .crumbs { margin-bottom: 18px; color: var(--ink-soft); }
 .crumbs a { text-decoration: none; border-bottom: 1px solid currentColor; }
 .area-hero h1 { margin: 22px 0 0; font: 700 clamp(1.9rem, 4.6vw, 4rem)/1.04 var(--f-display); letter-spacing: -.03em; max-width: 18ch; text-wrap: balance; }
 .area-hero h1 .hl { color: var(--timber-dk); position: relative; }
 .area-lede { max-width: 60ch; font-size: 1.1rem; margin: 22px 0 28px; }
-.area-facts { list-style: none; padding: 0; margin: 32px 0 0; display: grid; grid-template-columns: repeat(4, 1fr); border: var(--line); background: var(--sawdust); }
-.area-facts li { padding: 14px 16px; border-right: var(--line); }
+.area-facts { list-style: none; padding: 0; margin: 22px 0 0; display: inline-flex; flex-wrap: wrap; border: var(--line); background: var(--sawdust); font-size: .72rem; }
+.area-facts li { padding: 7px 12px; border-right: var(--line); white-space: nowrap; }
 .area-facts li:last-child { border-right: 0; }
-.area-facts b { display: block; font: 700 1.5rem/1.1 var(--f-display); letter-spacing: -.01em; text-transform: none; color: var(--timber-dk); margin-bottom: 4px; }
-@media (max-width: 760px) { .area-facts { grid-template-columns: 1fr 1fr; } .area-facts li:nth-child(2) { border-right: 0; } .area-facts li:nth-child(-n+2) { border-bottom: var(--line); } }
+.area-facts b { font: 700 .95rem/1 var(--f-display); letter-spacing: -.01em; text-transform: none; color: var(--timber-dk); margin-right: 5px; }
+@media (max-width: 560px) { .area-facts { display: grid; grid-template-columns: 1fr 1fr; } .area-facts li { white-space: normal; } .area-facts li:nth-child(2n) { border-right: 0; } .area-facts li:nth-child(-n+2) { border-bottom: var(--line); } }
 .area-two { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(24px, 4vw, 56px); align-items: start; }
 .area-two > * { min-width: 0; }
 .area-two .sec-title { margin-bottom: 16px; }
@@ -587,25 +587,19 @@ section { border-bottom: var(--line); }
 @media (max-width: 560px) { .firm-price { grid-template-columns: auto 1fr; } .firm-stamp { width: 60px; height: 60px; font-size: .52rem; } }
 
 /* ---------- team photo ---------- */
-.about-photos--team { display: block; }
-.team-fig { margin: 0; border: var(--line); background: var(--sawdust); }
-.team-fig img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 0 !important; margin: 0 !important; }
-.team-fig figcaption { padding: 8px 12px; border-top: var(--line); }
-
-/* ---------- cookie notice (analytics.js) ---------- */
-.cookie-notice {
-  position: fixed; left: 18px; bottom: 18px; z-index: 80;
-  max-width: 440px; padding: 18px 20px;
-  background: var(--sawdust); color: var(--ink);
-  border: var(--line); box-shadow: 6px 6px 0 var(--ink);
-}
-.cookie-notice p { margin: 0 0 14px; font-size: .9rem; line-height: 1.45; }
-.cookie-notice a { color: var(--ink); }
-.cookie-actions { display: flex; gap: 14px; flex-wrap: wrap; }
-.cookie-actions .btn { cursor: pointer; padding: .8em 1.2em; }
-@media (max-width: 700px) {
-  .cookie-notice { left: 10px; right: 10px; bottom: 64px; max-width: none; }
-}
+/* "Who we are" team carousel: same feel as the jobs viewer */
+.team-carousel { border: var(--line); background: var(--sawdust); }
+.team-track { display: grid; grid-auto-flow: column; grid-auto-columns: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.team-track::-webkit-scrollbar { display: none; }
+.team-track:focus-visible { outline: 3px solid var(--crayon); outline-offset: -3px; }
+.team-slide { margin: 0; scroll-snap-align: start; min-width: 0; display: flex; flex-direction: column; }
+.team-media { position: relative; aspect-ratio: 1 / 1; overflow: hidden; background: var(--ink); }
+.team-media::before { content: ""; position: absolute; inset: -20px; background: var(--bg) center / cover; filter: blur(18px) brightness(.55); }
+.team-slide img { position: relative; width: 100%; height: 100%; object-fit: contain; display: block; border: 0 !important; margin: 0 !important; }
+.team-slide figcaption { padding: 8px 12px; border-top: var(--line); }
+.team-nav { display: flex; align-items: center; justify-content: flex-end; gap: 10px; padding: 10px 12px; border-top: var(--line); }
+.team-count { margin-right: auto; }
+.team-nav .jobs-btn { width: 44px; height: 44px; box-shadow: 3px 3px 0 var(--crayon); }
 
 /* ---------- privacy page ---------- */
 .legal { max-width: 760px; }
@@ -673,3 +667,11 @@ section { border-bottom: var(--line); }
 
 /* bottom bar: one phone line + quote */
 @media (max-width: 700px) { .mobile-bar { grid-template-columns: 1.6fr 1fr; } .mobile-bar a:first-child { background: var(--ink); color: var(--sawdust); letter-spacing: .06em; } }
+
+/* area pages: compact "Homes in <suburb>" block */
+.sec.area-homes { padding: clamp(28px, 4vw, 48px) 0; }
+.area-homes .sec-title { font-size: clamp(1.3rem, 2.4vw, 1.9rem); margin-bottom: 10px; }
+.area-homes p { margin: 0; }
+.area-homes .area-jobs { padding: 14px 18px; box-shadow: 5px 5px 0 var(--timber); }
+.area-homes .area-jobs h3 { margin: 0 0 4px; font-size: .7rem; }
+.area-homes .area-jobs li { padding: 5px 0; font-size: .95rem; }

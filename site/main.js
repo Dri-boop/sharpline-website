@@ -176,3 +176,27 @@ document.querySelectorAll("[data-areas-toggle]").forEach((btn) => {
     btn.textContent = open ? "Show fewer areas ↑" : `Show all ${btn.dataset.count} areas ↓`;
   });
 });
+
+/* "Who we are" team carousel */
+const teamTrack = document.querySelector(".team-track");
+if (teamTrack) {
+  const slides = [...teamTrack.querySelectorAll(".team-slide")];
+  const count = document.querySelector(".team-count");
+  let cur = 0;
+  const goTo = (i) => {
+    cur = (i + slides.length) % slides.length;
+    teamTrack.scrollTo({ left: slides[cur].offsetLeft - slides[0].offsetLeft, behavior: "smooth" });
+  };
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (en.isIntersecting) { cur = slides.indexOf(en.target); if (count) count.textContent = `${cur + 1} / ${slides.length}`; }
+    });
+  }, { root: teamTrack, threshold: 0.6 });
+  slides.forEach((sl) => obs.observe(sl));
+  document.querySelector("[data-team-prev]").addEventListener("click", () => goTo(cur - 1));
+  document.querySelector("[data-team-next]").addEventListener("click", () => goTo(cur + 1));
+  teamTrack.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") { e.preventDefault(); goTo(cur + 1); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); goTo(cur - 1); }
+  });
+}

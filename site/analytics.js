@@ -1,6 +1,6 @@
-/* Google Analytics 4 + cookie notice for every page.
-   To switch analytics on, put the Measurement ID from GA4 here (looks like "G-AB12CD34EF").
-   While it is "G-XXXXXXXXXX", nothing is loaded and no cookie notice is shown. */
+/* Google Analytics 4 for every page (no cookie banner).
+   Visits are counted by default; the privacy page has a "Turn off statistics" button.
+   While GA_ID is "G-XXXXXXXXXX", nothing is loaded. */
 const GA_ID = "G-QT5TJW291V";
 
 (function () {
@@ -13,10 +13,10 @@ const GA_ID = "G-QT5TJW291V";
   window.dataLayer = window.dataLayer || [];
   window.gtag = function () { dataLayer.push(arguments); };
 
-  // Consent Mode: no analytics cookies until the visitor says OK. Ads storage is never used.
+  // Consent Mode: analytics on unless the visitor turned it off on the privacy page. Ads storage is never used.
   const choice = read();
   gtag("consent", "default", {
-    analytics_storage: choice === "granted" ? "granted" : "denied",
+    analytics_storage: choice === "denied" ? "denied" : "granted",
     ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied",
   });
   gtag("js", new Date());
@@ -52,38 +52,19 @@ const GA_ID = "G-QT5TJW291V";
     }, true);
   }
 
-  /* ---- cookie notice ---- */
-  function setChoice(v) {
+  /* ---- opt-out (privacy page) ---- */
+  // Buttons with data-analytics-optout turn statistics off (or back on) for this browser.
+  function label(btn) { btn.textContent = read() === "denied" ? "Turn statistics back on" : "Turn off statistics"; }
+  function initOptout() { document.querySelectorAll("[data-analytics-optout]").forEach(label); }
+  document.addEventListener("click", (e) => {
+    const t = e.target.closest && e.target.closest("[data-analytics-optout]");
+    if (!t) return;
+    e.preventDefault();
+    const v = read() === "denied" ? "granted" : "denied";
     save(v);
     gtag("consent", "update", { analytics_storage: v });
-    const bar = document.getElementById("cookie-notice");
-    if (bar) bar.remove();
-  }
-
-  function showNotice() {
-    if (document.getElementById("cookie-notice")) return;
-    const root = document.querySelector('link[rel="icon"]').getAttribute("href").replace("favicon.svg", "");
-    const bar = document.createElement("div");
-    bar.id = "cookie-notice";
-    bar.className = "cookie-notice";
-    bar.setAttribute("role", "region");
-    bar.setAttribute("aria-label", "Cookie notice");
-    bar.innerHTML =
-      `<p>We use Google Analytics cookies to count visits and see which pages help people. No ads, and we never sell your data. <a href="${root}privacy/">Privacy policy</a></p>` +
-      `<div class="cookie-actions"><button type="button" class="btn" data-c="granted">OK</button>` +
-      `<button type="button" class="btn btn--ghost" data-c="denied">No thanks</button></div>`;
-    bar.addEventListener("click", (e) => { const v = e.target.dataset && e.target.dataset.c; if (v) setChoice(v); });
-    document.body.appendChild(bar);
-  }
-
-  // Any element with data-cookie-settings (e.g. on the privacy page) re-opens the notice.
-  document.addEventListener("click", (e) => {
-    const t = e.target.closest && e.target.closest("[data-cookie-settings]");
-    if (t) { e.preventDefault(); showNotice(); }
+    label(t);
   });
-
-  if (!choice) {
-    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", showNotice);
-    else showNotice();
-  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initOptout);
+  else initOptout();
 })();
