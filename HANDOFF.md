@@ -29,6 +29,10 @@ Last updated: 2026-11-22.
   Leave the mail/ftp/NS/spf records alone.
 - Repo: `Dri-boop/sharpline-website` (public), same GitHub account as GridPulse.
   `.github/workflows/pages.yml` deploys `site/` on every push to `main`.
+  Since 2026-11-23 it has separate `build` and `deploy` jobs: the one-job version
+  kept failing with "No artifacts named github-pages" (deploy looked 0.6 s after
+  upload). If a deploy still fails, start a fresh run (workflow_dispatch); don't
+  re-run the failed job.
 - GitHub auth on this PC: Git Credential Manager (token has repo + workflow).
   GitHub CLI is not installed; the REST API with the GCM token works.
 - Domain change: `python tools/set_domain.py <domain>` (also needs the Pages
