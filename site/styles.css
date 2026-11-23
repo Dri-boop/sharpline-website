@@ -674,3 +674,10 @@ section { border-bottom: var(--line); }
 .area-homes .area-jobs { padding: 14px 18px; box-shadow: 5px 5px 0 var(--timber); }
 .area-homes .area-jobs h3 { margin: 0 0 4px; font-size: .7rem; }
 .area-homes .area-jobs li { padding: 5px 0; font-size: .95rem; }
+
+/* promise sits in the "Who we are" column: two per row */
+.about .promise { margin: 28px 0; }
+.about .promise-list { grid-template-columns: 1fr 1fr; }
+.about .promise-list li:nth-child(n) { border-right: 1.5px solid #3a3833; padding: 16px 20px 18px; }
+.about .promise-list li:nth-child(2n) { border-right: 0; }
+@media (max-width: 560px) { .about .promise-list { grid-template-columns: 1fr; } .about .promise-list li:nth-child(n) { border-right: 0; } }

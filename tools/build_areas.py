@@ -58,11 +58,12 @@ def captions_from_home():
 
 
 def pick_photos(area, i):
-    """Real photos from that suburb first (captioned with the suburb), then example photos to fill 6 slots."""
-    real = list(area.get("real_photos", []))[:6]
+    """Real photos from that suburb first (captioned with the suburb), then example photos to fill rows of three (min 6)."""
+    real = list(area.get("real_photos", []))[:9]
+    slots = max(6, -(-len(real) // 3) * 3)  # fill rows of three
     chosen, pools = list(real), [PHOTO_POOLS[p] for p in area["profile"]]
     k = 0
-    while len(chosen) < 6 and k < 60:
+    while len(chosen) < slots and k < 60:
         pool = pools[k % len(pools)]
         cand = pool[(i + k // len(pools)) % len(pool)] if pool is not PHOTO_POOLS["pool"] else pool[(k // len(pools)) % len(pool)]
         if cand not in chosen:

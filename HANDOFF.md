@@ -65,7 +65,7 @@ Last updated: 2026-11-22.
 
 ## 5. Decisions
 
-- No prices; "How pricing works" + "Our price is our price. Fixed once you say yes."
+- No prices; "How it works" (4 steps, ending "Price locked"). The orange "Our price is our price" banner was removed site-wide on 2026-11-23 at the owner's request.
 - Quotes 24/7; payment split 50/40/10 and 12-month guarantee are still
   placeholders until Charles confirms.
 - Quote form opens WhatsApp with the details (no email backend on GitHub Pages).
@@ -130,6 +130,18 @@ Last updated: 2026-11-22.
   hero; no "Homes in" block and no fixed-price banner.
 - Pallet beds (`furniture-13`, `furniture-19`): never on area pages and never
   near the top of the home gallery (owner: not our best work).
+- Home page sections: 01 What we build, 02 How it works (4 steps + notes +
+  Charles's staircase drawings), 03 Recent work, In motion jobs, 04 Who we are
+  (founder card, facts, team text, then the Sharpline promise). The old
+  "Measure twice. Cut once." section was removed (it repeated the steps).
+  Nav "How we work" and the hero button point to `#prices`.
+- New photos 2026-11-23 (`raw/new3/`, suburbs given by the owner): floor-03
+  Pinelands; floor-04/05 + video `bantry-herringbone.mp4` Bantry Bay (new
+  suburb page); floor-06..09 Mowbray (before/after); floor-10 + outdoor-07
+  Rondebosch; outdoor-05/06 Camps Bay. Area pages show up to 9 real photos.
+- NOT used yet: three professional-looking Bantry Bay shots
+  (`raw/new3/*PRO-PHOTO*`). Ask the owner whether we have the photographer's
+  permission; if yes, caption them as the floor only.
 - Waiting on files from the owner (to be saved in `raw/new3/`):
   1. More team photos (two men in a roof, measuring) → extra carousel slides.
   2. Floor framing over insulation, office partition wall, white/pine tables

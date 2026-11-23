@@ -32,7 +32,7 @@ AREAS = [
   dict(slug="mowbray", name="Mowbray", region=0, lat=-33.9460, lon=18.4760, profile=["rental", "compact", "apartment"],
        intro="Mowbray is a short drive from our Maitland workshop, just past Observatory.",
        homes="Mowbray has a mix of older cottages, semi-detached houses and apartment blocks close to UCT, with lots of student accommodation and first homes.",
-       jobs=["Compact kitchens and kitchenettes", "Built-in wardrobes and study units", "Refits between tenants"],
+       jobs=["Replacing old timber floors", "Compact kitchens and kitchenettes", "Built-in wardrobes and study units", "Refits between tenants"],
        faq=("Can you fit out student rooms in Mowbray?", "Yes. Built-in desks, shelving and wardrobes for student rooms are a common job for us, built strong enough for years of use.")),
   dict(slug="rosebank", name="Rosebank", region=0, lat=-33.9540, lon=18.4730, profile=["heritage", "family", "rental"],
        intro="Rosebank is about 15 minutes from our Maitland workshop, between Mowbray and Rondebosch.",
@@ -42,7 +42,7 @@ AREAS = [
   dict(slug="pinelands", name="Pinelands", region=0, lat=-33.9370, lon=18.5050, profile=["family", "pool"],
        intro="Pinelands is next door to our Maitland workshop, so Pinelands clients get some of our fastest site visits.",
        homes="Pinelands was planned as a garden city, with 1940s–60s family homes on generous plots, big gardens and plenty of pools. Many original kitchens and built-ins are now due for replacement.",
-       jobs=["Replacing original kitchens with modern layouts", "Built-in cupboards for bedrooms and studies", "Pool decks and garden decking"],
+       jobs=["Sanding and sealing pine floors", "Replacing original kitchens with modern layouts", "Built-in cupboards for bedrooms and studies", "Pool decks and garden decking"],
        faq=("Can you replace an original kitchen in a Pinelands home?", "Yes. We take out the old units, check the walls and plumbing points, and build and fit the new kitchen, with a fixed price agreed before we start.")),
   dict(slug="thornton", name="Thornton", region=0, lat=-33.9230, lon=18.5370, profile=["family"],
        intro="Thornton is a few minutes from our Maitland workshop, on the other side of Pinelands.",
@@ -111,17 +111,22 @@ AREAS = [
        homes="Fresnaye has large homes on the mountainside, many with pools and entertainment areas facing the sea.",
        jobs=["Premium kitchens", "Pool decks and outdoor timber", "Built-in cupboards and dressing rooms"],
        faq=("Do you do high-end kitchens in Fresnaye?", "Yes. We build premium kitchens with quality boards, sprayed or veneer finishes and branded hardware, at a fixed, written price.")),
+  dict(slug="bantry-bay", name="Bantry Bay", region=1, lat=-33.9275, lon=18.3785, profile=["apartment", "coastal", "family"],
+       intro="We've laid an oak herringbone floor in Bantry Bay, about 25 minutes from our Maitland workshop.",
+       homes="Bantry Bay is a small, steep suburb between Sea Point and Clifton, with apartment blocks and large modern homes facing the sea.",
+       jobs=["Oak and herringbone floors", "Built-in cupboards and dressing rooms", "Kitchens with salt-air-resistant hardware"],
+       faq=("Have you worked in Bantry Bay?", "Yes. We've laid an oak herringbone floor through a home in Bantry Bay, cut in around curved walls.")),
   dict(slug="camps-bay", name="Camps Bay", region=1, lat=-33.9510, lon=18.3780, profile=["pool", "coastal", "family"],
        intro="Camps Bay is about 30 minutes from our Maitland workshop, on the Atlantic side of the mountain.",
        homes="Camps Bay homes are built for outdoor living: pools, decks and big sliding doors facing the sea, with the salt air and sun that come with it.",
        jobs=["Pool decks and hot-tub surrounds", "Outdoor timber built for sea air", "Kitchens and entertainment areas"],
-       faq=("Will a timber pool deck last in Camps Bay?", "Yes, if it's built right. We use durable hardwood, stainless fixings and proper sealing, and we'll explain the simple maintenance that keeps it looking good.")),
+       faq=("Will a timber pool deck last in Camps Bay?", "Yes, if it's built right. We've built a hardwood roof deck with hot-tub steps in Camps Bay, using durable hardwood, stainless fixings and proper sealing, and we'll explain the simple maintenance that keeps it looking good.")),
 
   # ---------- Southern Suburbs ----------
   dict(slug="rondebosch", name="Rondebosch", region=2, lat=-33.9620, lon=18.4760, profile=["family", "heritage", "pool"],
        intro="Rondebosch is about 15 minutes from our Maitland workshop.",
        homes="Rondebosch has large family homes, older character houses near the schools and UCT, and plenty of gardens and pools.",
-       jobs=["Family kitchen renovations", "Built-in cupboards and study units", "Pool decks"],
+       jobs=["Family kitchen renovations", "Built-in cupboards and study units", "Hardwood pool decks", "Timber floor repairs"],
        faq=("Can you fit a full kitchen in Rondebosch?", "Yes. From design and measuring to installation, one team handles your kitchen, at a fixed price agreed upfront.")),
   dict(slug="newlands", name="Newlands", region=2, lat=-33.9750, lon=18.4600, profile=["family", "pool"],
        intro="Newlands is about 20 minutes from our Maitland workshop, at the foot of the mountain.",
@@ -242,7 +247,12 @@ REAL_PHOTOS = {
   "lansdowne": ["kitchen-11"],
   "bloubergstrand": ["kitchen-04", "kitchen-08", "team-04"],
   "devils-peak": ["outdoor-03", "outdoor-04", "team-01"],
+  "mowbray": ["floor-06", "floor-07", "floor-08", "floor-09"],
+  "pinelands": ["floor-03"],
+  "camps-bay": ["outdoor-05", "outdoor-06"],
+  "bantry-bay": ["floor-04", "floor-05"],
 }
+REAL_PHOTOS["rondebosch"] = ["outdoor-07", "floor-10"] + REAL_PHOTOS["rondebosch"]
 for _a in AREAS:
     if _a["slug"] in REAL_PHOTOS:
         _a["real_photos"] = REAL_PHOTOS[_a["slug"]]
