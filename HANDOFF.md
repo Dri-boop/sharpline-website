@@ -130,8 +130,17 @@ Last updated: 2026-11-22.
   team-charles and team-01..04. More team photos can be added as slides.
 - Header has no "Pricing" link (owner's request).
 - Area pages (template in `build_areas.py`): intro = `homes` text + "We're often
-  asked for <jobs>"; compact one-line facts bar; work photos straight under the
-  hero; no "Homes in" block and no fixed-price banner.
+  asked for <jobs>"; no facts bar (owner: "dont add this on the area pages");
+  work photos straight under the hero; no "Homes in" block and no fixed-price banner.
+- Area pages must stay clearly different (Google indexing, asked by the SEO
+  session 2026-11-26): each has a "Working in <suburb>" paragraph and 2 own FAQs
+  from `tools/areas_local.py` (general local facts only; jobs named only where
+  real_photos confirm them), plus the suburb FAQ in `areas_data.py` and, for 28
+  suburbs, extra FAQs from `tools/areas_text.py` (SEO session; only questions the
+  page doesn't already answer). No shared service descriptions or generic FAQs.
+  Measured 2026-11-26 (difflib, 150 pairs): two pages share 33% of their words on
+  average, 44% at most (was 73-83%). Never add a second text block that repeats
+  the local text. New suburbs need a LOCAL entry or the build fails.
 - Pallet beds (`furniture-13`, `furniture-19`): never on area pages and never
   near the top of the home gallery (owner: not our best work).
 - Home page sections: 01 What we build, 02 How it works (4 steps + notes +

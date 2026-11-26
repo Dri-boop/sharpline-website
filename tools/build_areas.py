@@ -14,6 +14,8 @@ from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from areas_data import AREAS, REGIONS, WORKSHOP  # noqa: E402
+from areas_local import LOCAL
+from areas_text import EXTRA_FAQS  # extra suburb-specific FAQs (SEO session)
 
 SITE = os.path.join(HERE, "..", "site")
 DOMAIN = "https://sharplinerenovation.co.za"   # TODO: real domain
@@ -164,13 +166,8 @@ def area_page(a, i, caps, nearby):
     desc = a.get("description") or (f"Renovation and woodwork in {name}, Cape Town: kitchens, built-in cupboards, doors, garage doors"
             f"{', pool decks' if 'pool' in a['profile'] else ''} and furniture. " + ("Based in Maitland, Cape Town, working across South Africa." if far else f"Workshop {mins} min away in Maitland.") + " Quotes 24/7, fixed prices.")
     canonical = f"{DOMAIN}/areas/{slug}/"
-    faqs = [
-        (f"How do projects in {name} work?", "We're based in Maitland, Cape Town. For projects further away we agree the scope, materials and timeline upfront, then build and install.") if far else
-        (f"Do you work in {name}?", f"Yes. Our workshop is in Maitland, about {dist} km from {name} (roughly {mins} minutes' drive), so we can come out to measure and quote quickly."),
-        (f"How much does a renovation or carpentry job in {name} cost?", "Every job is priced for your space, materials and finishes. After a free site visit you get a written, itemised quote, and once you accept it the price is fixed: we never come back to ask for more."),
-        (f"How do I get a quote in {name}?", "WhatsApp us photos and rough measurements, any time, 24/7. We'll reply with next steps and arrange a free site visit."),
-        a["faq"],
-    ]
+    local = LOCAL[slug]
+    faqs = [a["faq"], *local["faqs"], *EXTRA_FAQS.get(slug, [])]
     ld = {"@context": "https://schema.org", "@graph": [
         business_ld(name),
         {"@type": "BreadcrumbList", "itemListElement": [
@@ -179,16 +176,6 @@ def area_page(a, i, caps, nearby):
             {"@type": "ListItem", "position": 3, "name": name, "item": canonical}]},
         {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": ans}} for q, ans in faqs]},
     ]}
-    services = [
-        ("Kitchen renovations", f"New kitchens and kitchen refits in {name}: cabinets, islands, sculleries and worktops, designed around how you cook."),
-        ("Built-in cupboards", f"Built-in cupboards and wardrobes for {name} homes, from single alcoves to full walls with sliding doors."),
-        ("Doors, garage doors & gates", "Front doors, stable doors, security doors, aluminium and glass garage doors, and gates."),
-        ("Woodwork & custom furniture", "Beds, drawers, counters, tables and commercial furniture, made in our Maitland workshop."),
-        ("Pool decks & outdoor timber" if "pool" in a["profile"] or "coastal" in a["profile"] else "Home renovations",
-         "Hardwood decks, pool decks and hot-tub surrounds built for sun, water and salt air." if "pool" in a["profile"] or "coastal" in a["profile"]
-         else "Flooring, vanities and general home improvements, done properly and left clean."),
-        ("Fixed-price quotes, 24/7", "Send your request day or night. Once you accept the written quote, the price doesn't change."),
-    ]
     figs = []
     for p in photos:
         w, h = Image.open(os.path.join(SITE, "img", f"{p}-sm.jpg")).size
@@ -202,16 +189,15 @@ def area_page(a, i, caps, nearby):
         gallery_title, gallery_note = f"Our work in {name}", ""
     elif real:
         gallery_title = f"Our work in {name}"
-        gallery_note = f"<p class=\"area-note\">Projects in {E(name)} first, then more examples from across Cape Town.</p>"
+        gallery_note = f"<p class=\"area-note\">{E(name)} first, then more of our work.</p>"
     else:
         gallery_title = "Examples of our work"
-        gallery_note = f"<p class=\"area-note\">A selection from our projects across Cape Town. We're adding more {E(name)} projects soon.</p>"
+        gallery_note = "<p class=\"area-note\">From our projects across Cape Town.</p>"
     nb = "".join(f'<li><a href="../{n["slug"]}/">{E(n["name"])}</a></li>' for n in nearby)
     jobs = "".join(f"<li>{E(j)}</li>" for j in a["jobs"])
     low = lambda j: j[0].lower() + j[1:] if len(j) > 1 and j[1].islower() else j
     js = [low(j) for j in a["jobs"]]
     jobs_text = ", ".join(js[:-1]) + (", and " if len(js) > 2 else " and ") + js[-1] if len(js) > 1 else js[0]
-    svc = "".join(f'<li><h3>{E(t)} <span>in {E(name)}</span></h3><p>{E(d)}</p></li>' for t, d in services)
     faq_html = "".join(f"<details><summary>{E(q)}</summary><p>{E(ans)}</p></details>" for q, ans in faqs)
 
     return f'''{head(title, desc, canonical, root, ld)}
@@ -228,11 +214,6 @@ def area_page(a, i, caps, nearby):
       <a class="btn btn--wa" href="#" data-wa-area>Get a quote in {E(name)}</a>
       <a class="btn btn--ghost" href="tel:{TEL}">Call {PHONE}</a>
     </div>
-    <ul class="area-facts mono">
-      {"<li><b>SA-wide</b> projects</li><li><b>Planned</b> upfront</li>" if far else f"<li><b>~{dist} km</b> from Maitland</li><li><b>~{mins} min</b> drive</li>"}
-      <li><b>24/7</b> quotes</li>
-      <li><b>Fixed</b> price</li>
-    </ul>
   </div>
 </section>
 <div class="saw saw--band" aria-hidden="true"></div>
@@ -246,10 +227,11 @@ def area_page(a, i, caps, nearby):
   </div>
 </section>
 
-<section class="sec">
+<section class="sec area-local">
   <div class="wrap">
-    <h2 class="sec-title">Carpentry &amp; renovation services in {E(name)}</h2>
-    <ul class="area-services">{svc}</ul>
+    <h2 class="sec-title">Working in {E(name)}</h2>
+    <p>{E(local["text"])}</p>
+    <p class="area-svc mono"><a href="{root}#services">Kitchens · Built-in cupboards · Doors &amp; garage doors · Furniture · Decks · Renovations →</a></p>
   </div>
 </section>
 
@@ -261,14 +243,13 @@ def area_page(a, i, caps, nearby):
     </div>
     <div>
       <div class="advice">
-        <h3>Not sure what you need? Ask Charles.</h3>
-        <p>Send a photo of your space and Charles Zeka, with 15+ years in carpentry and renovation, will give you his honest recommendation.</p>
-        <a class="btn btn--wa" href="#" data-wa-area>Ask Charles on WhatsApp</a>
+        <h3>Not sure? Ask Charles.</h3>
+        <a class="btn btn--wa" href="#" data-wa-area>Send Charles a photo</a>
       </div>
       <div class="areas" style="margin-top:28px">
         <h3 class="mono">Also near {E(name)}</h3>
         <ul class="mono">{nb}</ul>
-        <p class="areas-all">Examples of recent work areas. We work anywhere in South Africa. <a href="../">All areas →</a></p>
+        <p class="areas-all"><a href="../">All areas →</a></p>
       </div>
     </div>
   </div>
